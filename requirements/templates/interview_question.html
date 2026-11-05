@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card p-4">
+  <p class="text-muted">{{ company }} • {{ skill }}</p>
+  <h3>{{ question }}</h3>
+  <form method="post" action="{{ url_for('submit_interview') }}">
+    <input type="hidden" name="company" value="{{ company }}">
+    <input type="hidden" name="skill" value="{{ skill }}">
+    <input type="hidden" name="question" value="{{ question }}">
+    <input type="hidden" name="keywords" value='{{ keywords|tojson }}'>
+    <textarea class="form-control mb-3" name="answer" rows="7" placeholder="Type your answer..." required></textarea>
+    <button class="btn btn-primary">Submit Answer</button>
+  </form>
+</div>
+{% endblock %}

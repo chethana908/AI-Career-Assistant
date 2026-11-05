@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center">
+  <h2>Resume Analysis</h2>
+  <a class="btn btn-success" href="{{ url_for('report', resume_id=resume.id) }}">Download PDF Report</a>
+</div>
+<div class="card p-4 mt-3">
+  <h3>Resume Score: <span class="text-primary">{{ resume.score }}%</span></h3>
+  <div class="progress mb-4"><div class="progress-bar" style="width:{{ resume.score }}%">{{ resume.score }}%</div></div>
+  <h4>Detected Skills</h4>
+  {% for s in skills %}<span class="badge bg-primary skill">{{ s }}</span>{% else %}<p>No skills detected.</p>{% endfor %}
+  <hr>
+  <h4>Education</h4><p>{{ resume.education or "Not detected" }}</p>
+  <h4>Experience</h4><p>{{ resume.experience or "Not detected" }}</p>
+  <h4>Suggestions</h4>
+  <ul>{% for s in suggestions %}<li>{{ s }}</li>{% endfor %}</ul>
+</div>
+{% endblock %}

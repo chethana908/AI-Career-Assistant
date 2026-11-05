@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard-header mb-4">
+    <div>
+        <h2>Welcome, {{ current_user.name }} 👋</h2>
+        <p>Your career development overview</p>
+    </div>
+</div>
+
+<!-- Statistics -->
+<div class="row g-4 mb-4">
+
+    <div class="col-md-4">
+        <div class="dashboard-stat-card">
+            <div class="stat-icon">📄</div>
+            <h6>Resume Score</h6>
+            <div class="stat-number">
+                {{ resume.score if resume else 0 }}%
+            </div>
+            <p>Your resume performance</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="dashboard-stat-card">
+            <div class="stat-icon">💡</div>
+            <h6>Detected Skills</h6>
+            <div class="stat-number">{{ skills|length }}</div>
+            <p>Skills identified in your resume</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="dashboard-stat-card">
+            <div class="stat-icon">🎯</div>
+            <h6>Interview Average</h6>
+            <div class="stat-number">{{ avg }}/10</div>
+            <p>Your interview practice score</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- Main Dashboard Sections -->
+<div class="row g-4">
+
+    <!-- Detected Skills -->
+    <div class="col-lg-6">
+        <div class="dashboard-panel h-100">
+
+            <div class="panel-heading">
+                <div>
+                    <h4>My Skills</h4>
+                    <p>Skills detected from your resume</p>
+                </div>
+                <span class="panel-icon">⚡</span>
+            </div>
+
+            <div class="skills-container">
+                {% for s in skills %}
+                    <span class="skill-tag">{{ s }}</span>
+                {% else %}
+                    <p class="empty-message">
+                        No skills detected yet. Upload your resume to get started.
+                    </p>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Job Matches -->
+    <div class="col-lg-6">
+        <div class="dashboard-panel h-100">
+
+            <div class="panel-heading">
+                <div>
+                    <h4>Top Job Matches</h4>
+                    <p>Jobs matching your detected skills</p>
+                </div>
+                <span class="panel-icon">💼</span>
+            </div>
+
+            {% for job, score, matched in jobs %}
+
+                <div class="job-match-item">
+
+                    <div class="job-info">
+                        <div>
+                            <h6>{{ job.title }}</h6>
+                            <span>{{ job.company }}</span>
+                        </div>
+
+                        <strong>{{ score }}%</strong>
+                    </div>
+
+                    <div class="progress job-progress">
+                        <div
+                            class="progress-bar"
+                            role="progressbar"
+                            style="width: {{ score }}%;"
+                            aria-valuenow="{{ score }}"
+                            aria-valuemin="0"
+                            aria-valuemax="100">
+                        </div>
+                    </div>
+
+                </div>
+
+            {% else %}
+                <p class="empty-message">
+                    No job recommendations yet. Upload your resume to discover matching jobs.
+                </p>
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

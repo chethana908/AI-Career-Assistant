@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="creative-home">
+
+    <!-- HERO SECTION -->
+    <section class="creative-hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                ✨ AI-POWERED CAREER ASSISTANT
+            </div>
+
+            <h1>
+                Build Your Career.
+                <span>Shape Your Future.</span>
+            </h1>
+
+            <p>
+                An intelligent career companion designed to help
+                you analyze your resume, practice interviews,
+                and discover the right job opportunities.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="{{ url_for('login') }}" class="hero-primary">
+                    Start Your Journey →
+                </a>
+
+                <a href="{{ url_for('login') }}" class="hero-secondary">
+                    Login
+                </a>
+
+            </div>
+
+            <!-- MINI FEATURES -->
+            <div class="hero-features">
+
+                <div>
+                    <span>01</span>
+                    <p>Resume<br>Analysis</p>
+                </div>
+
+                <div>
+                    <span>02</span>
+                    <p>Interview<br>Practice</p>
+                </div>
+
+                <div>
+                    <span>03</span>
+                    <p>Job<br>Matching</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT AI CARD -->
+        <div class="hero-visual">
+
+            <div class="glow-circle"></div>
+
+            <div class="ai-card">
+
+                <div class="ai-card-top">
+                    <span>AI CAREER SCORE</span>
+                    <span>✦</span>
+                </div>
+
+                <div class="score">
+                    78<span>%</span>
+                </div>
+
+                <p>
+                    Your career profile is looking strong.
+                </p>
+
+                <div class="score-bar">
+                    <div></div>
+                </div>
+
+                <div class="score-info">
+                    <span>Career Ready</span>
+                    <b>Good Progress</b>
+                </div>
+
+            </div>
+
+
+            <div class="floating-card floating-one">
+                📄 Resume
+                <small>Analyzed</small>
+            </div>
+
+            <div class="floating-card floating-two">
+                🎯 Interview
+                <small>Practice</small>
+            </div>
+
+            <div class="floating-card floating-three">
+                💼 Jobs
+                <small>Matched</small>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="home-features">
+
+        <div class="section-heading">
+
+            <span>YOUR CAREER TOOLKIT</span>
+
+            <h2>
+                Everything you need to become
+                <strong>job-ready.</strong>
+            </h2>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+
+                <div class="feature-number">01</div>
+
+                <div class="feature-icon">
+                    📄
+                </div>
+
+                <h3>Resume Analyzer</h3>
+
+                <p>
+                    Analyze your resume and discover
+                    skills, strengths and areas that
+                    need improvement.
+                </p>
+
+                <a href="{{ url_for('login') }}">
+                    Explore →
+                </a>
+
+            </div>
+
+
+            <div class="feature-card feature-purple">
+
+                <div class="feature-number">02</div>
+
+                <div class="feature-icon">
+                    🎤
+                </div>
+
+                <h3>Interview Practice</h3>
+
+                <p>
+                    Practice technical and HR questions
+                    and become more confident for your
+                    next interview.
+                </p>
+
+                <a href="{{ url_for('login') }}">
+                    Practice →
+                </a>
+
+            </div>
+
+
+            <div class="feature-card feature-green">
+
+                <div class="feature-number">03</div>
+
+                <div class="feature-icon">
+                    💼
+                </div>
+
+                <h3>Job Recommendations</h3>
+
+                <p>
+                    Find suitable opportunities based
+                    on your skills, interests and career
+                    goals.
+                </p>
+
+                <a href="{{ url_for('login') }}">
+                    Find Jobs →
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+    <section class="how-section">
+
+        <div class="how-text">
+
+            <span>HOW IT WORKS</span>
+
+            <h2>
+                Your career journey,
+                <strong>simplified.</strong>
+            </h2>
+
+            <p>
+                Get personalized career guidance through
+                three simple steps.
+            </p>
+
+        </div>
+
+
+        <div class="steps">
+
+            <div class="step">
+                <div>01</div>
+                <section>
+                    <h3>Upload Your Resume</h3>
+                    <p>
+                        Let the system understand your
+                        skills and experience.
+                    </p>
+                </section>
+            </div>
+
+            <div class="step">
+                <div>02</div>
+                <section>
+                    <h3>Practice & Improve</h3>
+                    <p>
+                        Practice interviews and identify
+                        areas for improvement.
+                    </p>
+                </section>
+            </div>
+
+            <div class="step">
+                <div>03</div>
+                <section>
+                    <h3>Discover Opportunities</h3>
+                    <p>
+                        Find jobs that match your
+                        career profile.
+                    </p>
+                </section>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINAL CTA -->
+    <section class="home-cta">
+
+        <div>
+
+            <span>READY TO START?</span>
+
+            <h2>
+                Your dream career
+                starts with one step.
+            </h2>
+
+        </div>
+
+        <a href="{{ url_for('login') }}">
+            Start Now →
+        </a>
+
+    </section>
+
+</div>
+
+{% endblock %}

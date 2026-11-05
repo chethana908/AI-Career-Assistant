@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="resume-page">
+
+    <div class="resume-hero">
+        <span class="resume-eyebrow">AI POWERED CAREER TOOLS</span>
+        <h2>Resume Analyzer</h2>
+        <p>Upload your resume and discover how well it showcases your professional skills.</p>
+    </div>
+
+    <div class="resume-upload-card">
+
+        <div class="resume-upload-icon">📄</div>
+
+        <h3>Analyze Your Resume</h3>
+        <p class="resume-description">
+            Upload your PDF resume to receive an automated resume score,
+            detected skills and improvement suggestions.
+        </p>
+
+        <form method="post" enctype="multipart/form-data">
+
+            <label for="resume-file" class="resume-drop-area">
+                <div class="upload-symbol">☁️</div>
+                <strong>Choose your resume PDF</strong>
+                <span>Click here to browse your files</span>
+                <small id="resume-file-name">PDF format only</small>
+            </label>
+
+            <input
+                id="resume-file"
+                class="resume-file-input"
+                type="file"
+                name="resume"
+                accept=".pdf,application/pdf"
+                required
+            >
+
+            <div class="resume-requirements">
+                <span>✓ PDF format</span>
+                <span>✓ Text-based resume</span>
+                <span>✓ Clear and readable content</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary resume-submit">
+                Analyze My Resume →
+            </button>
+
+        </form>
+
+        <div class="resume-privacy-note">
+            Your uploaded resume is used by this application for analysis.
+        </div>
+
+    </div>
+
+    <div class="resume-benefits">
+
+        <div class="resume-benefit">
+            <span>📊</span>
+            <strong>Resume Score</strong>
+            <p>Evaluate your resume using the application's scoring system.</p>
+        </div>
+
+        <div class="resume-benefit">
+            <span>💡</span>
+            <strong>Skill Detection</strong>
+            <p>Identify technical skills mentioned in your resume.</p>
+        </div>
+
+        <div class="resume-benefit">
+            <span>🚀</span>
+            <strong>Improvement Tips</strong>
+            <p>Get suggestions to improve your resume.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+const resumeInput = document.getElementById("resume-file");
+const resumeFileName = document.getElementById("resume-file-name");
+
+resumeInput.addEventListener("change", function () {
+    if (this.files.length > 0) {
+        resumeFileName.textContent = "Selected: " + this.files[0].name;
+    } else {
+        resumeFileName.textContent = "PDF format only";
+    }
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="interview-page">
+
+    <!-- HEADER -->
+    <div class="interview-hero">
+        <span class="interview-eyebrow">AI CAREER PREPARATION</span>
+        <h2>Interview Practice</h2>
+        <p>Prepare for technical and HR interviews with personalized practice questions.</p>
+    </div>
+
+    <!-- INTERVIEW FORM -->
+    <div class="interview-card">
+
+        <div class="interview-icon">🎤</div>
+
+        <h3>Set Up Your Mock Interview</h3>
+        <p class="interview-description">
+            Customize your interview session by choosing a company,
+            technical skill and interview category.
+        </p>
+
+        <form method="post">
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold" for="company">
+                    Target Company
+                </label>
+
+                <input
+                    id="company"
+                    class="form-control interview-input"
+                    name="company"
+                    value="TCS"
+                    placeholder="Enter company name"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold" for="skill">
+                    Select Your Skill
+                </label>
+
+                <select
+                    id="skill"
+                    class="form-select interview-input"
+                    name="skill"
+                    required>
+
+                    {% for skill in skills %}
+                    <option value="{{ skill }}">{{ skill }}</option>
+                    {% else %}
+                    <option value="" disabled selected>
+                        No skills available — upload your resume first
+                    </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-semibold" for="category">
+                    Interview Category
+                </label>
+
+                <select
+                    id="category"
+                    class="form-select interview-input"
+                    name="category"
+                    required>
+
+                    <option value="technical">
+                        Technical Interview
+                    </option>
+
+                    <option value="hr">
+                        HR Interview
+                    </option>
+
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary interview-submit">
+                Start My Interview →
+            </button>
+
+        </form>
+
+        <div class="interview-note">
+            💡 Choose a skill you want to improve and practice regularly.
+        </div>
+
+    </div>
+
+    <!-- INTERVIEW FEATURES -->
+    <div class="interview-features">
+
+        <div class="interview-feature-card">
+            <span>💻</span>
+            <h5>Technical Practice</h5>
+            <p>Practice questions based on your selected technical skill.</p>
+        </div>
+
+        <div class="interview-feature-card">
+            <span>🤝</span>
+            <h5>HR Preparation</h5>
+            <p>Prepare for common HR and behavioral interview questions.</p>
+        </div>
+
+        <div class="interview-feature-card">
+            <span>📈</span>
+            <h5>Performance Review</h5>
+            <p>Review your answers and improve your interview preparation.</p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

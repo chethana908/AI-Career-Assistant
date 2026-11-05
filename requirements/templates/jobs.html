@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="jobs-page">
+
+    <!-- HEADER -->
+    <div class="jobs-hero">
+        <span class="jobs-eyebrow">PERSONALIZED OPPORTUNITIES</span>
+        <h2>Job Recommendations</h2>
+        <p>Discover opportunities that match the skills in your resume.</p>
+    </div>
+
+    <!-- USER SKILLS -->
+    <div class="jobs-skills-panel mb-4">
+        <div class="jobs-panel-heading">
+            <div>
+                <h4>Your Skills</h4>
+                <p>Skills identified from your uploaded resume</p>
+            </div>
+            <span class="jobs-icon">💡</span>
+        </div>
+
+        <div class="jobs-skill-list">
+            {% for s in skills %}
+            <span class="jobs-skill-tag">{{ s }}</span>
+            {% else %}
+            <p class="text-muted mb-0">
+                Upload your resume to discover your skills and matching jobs.
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- JOB RESULTS -->
+    <div class="jobs-results-heading">
+        <div>
+            <h3>Recommended Opportunities</h3>
+            <p>Based on your detected resume skills</p>
+        </div>
+        <span class="jobs-count">
+            {{ recommendations|length }} Matches
+        </span>
+    </div>
+
+    <div class="row g-4">
+
+        {% for job, score, matched in recommendations %}
+
+        <div class="col-lg-6">
+            <div class="job-card h-100">
+
+                <div class="job-card-header">
+                    <div class="job-company-icon">💼</div>
+                    <div class="job-title-area">
+                        <h4>{{ job.title }}</h4>
+                        <p>{{ job.company }}</p>
+                    </div>
+                    <span class="job-match-badge">{{ score }}%</span>
+                </div>
+
+                <div class="job-location">
+                    <span>📍</span> {{ job.location }}
+                </div>
+
+                <div class="job-match-section">
+                    <div class="d-flex justify-content-between mb-2">
+                        <strong>Skill Match</strong>
+                        <strong class="job-match-number">{{ score }}%</strong>
+                    </div>
+
+                    <div class="progress job-match-progress">
+                        <div class="progress-bar"
+                             role="progressbar"
+                             style="width: {{ score }}%"
+                             aria-valuenow="{{ score }}"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="job-skills-section">
+                    <strong>Required Skills</strong>
+                    <p>{{ job.skills }}</p>
+                </div>
+
+                <div class="job-matched-section">
+                    <strong>✓ Your Matching Skills</strong>
+
+                    <div class="job-matched-tags">
+                        {% if matched %}
+                            {% for skill in matched %}
+                            <span>{{ skill }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <small class="text-muted">
+                                No exact skill match found.
+                            </small>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {% else %}
+
+        <div class="col-12">
+            <div class="jobs-empty-state">
+                <div>🔍</div>
+                <h4>No Job Recommendations Yet</h4>
+                <p>
+                    Upload your resume and make sure it contains
+                    relevant technical skills to receive recommendations.
+                </p>
+                <a href="{{ url_for('resume_analyzer') }}"
+                   class="btn btn-primary">
+                    Analyze My Resume
+                </a>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="jobs-disclaimer mt-4">
+        <strong>Note:</strong>
+        These recommendations are based on the skills-matching logic
+        and job data configured in this application. They are not live job listings.
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card p-4">
+  <h2>Interview Result</h2>
+  <p><b>Question:</b> {{ record.question }}</p>
+  <h3>Score: {{ record.score }}/10</h3>
+  <div class="progress mb-3"><div class="progress-bar" style="width:{{ record.score * 10 }}%">{{ record.score }}/10</div></div>
+  <p><b>Feedback:</b> {{ record.feedback }}</p>
+  <p><b>Concepts detected:</b> {{ matched|join(", ") if matched else "None" }}</p>
+  <a href="{{ url_for('interview') }}" class="btn btn-primary">Practice Again</a>
+</div>
+{% endblock %}

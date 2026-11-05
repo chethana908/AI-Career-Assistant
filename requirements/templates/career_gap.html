@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="career-page">
+
+    <!-- PAGE HEADER -->
+    <div class="career-hero mb-4">
+        <div class="career-eyebrow">PERSONALIZED CAREER PLANNING</div>
+        <h2>Smart Career Gap Analyzer</h2>
+        <p>Discover your skill gaps and build a personalized path towards your dream role.</p>
+    </div>
+
+    <!-- RESUME AND ROLE SELECTION -->
+    <div class="career-panel mb-4">
+
+        <div class="career-section-heading">
+            <div>
+                <h4>Your Career Profile</h4>
+                <p>Choose a target role based on your career goals.</p>
+            </div>
+            <span class="career-heading-icon">🎯</span>
+        </div>
+
+        {% if latest_resume %}
+        <div class="resume-info-card mb-4">
+            <div class="resume-file-icon">📄</div>
+
+            <div class="resume-file-details">
+                <strong>Latest Resume Saved</strong>
+                <div>{{ latest_resume.filename }}</div>
+                <small>
+                    Uploaded:
+                    {{ latest_resume.created_at.strftime('%d %b %Y, %I:%M %p') }}
+                </small>
+            </div>
+
+            <div class="resume-actions">
+                <a href="{{ url_for('resume_analyzer') }}"
+                   class="btn btn-outline-primary btn-sm">
+                    Replace Resume
+                </a>
+
+                <form method="POST"
+                      action="{{ url_for('career_gap_delete_resume') }}"
+                      onsubmit="return confirm('Are you sure you want to delete your latest saved resume?');">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                        Delete Resume
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div class="resume-empty-card mb-4">
+            <strong>No resume uploaded yet</strong>
+            <p>Upload your PDF resume before analyzing your career gap.</p>
+            <a href="{{ url_for('resume_analyzer') }}" class="btn btn-primary btn-sm">
+                Upload Resume
+            </a>
+        </div>
+        {% endif %}
+
+        <form method="POST"
+              action="{{ url_for('career_gap') }}"
+              class="row g-3 align-items-end">
+
+            <div class="col-lg-8">
+                <label for="target_role" class="form-label fw-semibold">
+                    Select Your Target Career
+                </label>
+
+                <select class="form-select career-select"
+                        id="target_role"
+                        name="target_role"
+                        required>
+                    <option value="">Choose your desired role</option>
+
+                    {% for role in roles %}
+                    <option value="{{ role }}"
+                        {% if selected_role == role %}selected{% endif %}>
+                        {{ role }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-lg-4">
+                <button type="submit" class="btn btn-primary analyze-button w-100">
+                    Analyze My Skill Gap →
+                </button>
+            </div>
+        </form>
+
+        {% if not has_resume %}
+        <p class="career-notice mt-3 mb-0">
+            Upload your PDF resume first to generate an accurate skill comparison.
+        </p>
+        {% endif %}
+
+    </div>
+
+    {% if analysis %}
+
+    <!-- ANALYSIS HEADER -->
+    <div class="analysis-heading mb-3">
+        <div>
+            <span class="career-eyebrow">YOUR ANALYSIS</span>
+            <h3>{{ analysis.role }} Career Readiness</h3>
+            <p>Here is how your current resume compares with the role requirements.</p>
+        </div>
+    </div>
+
+    <!-- SUMMARY CARDS -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="analysis-stat-card match-card">
+                <span class="analysis-icon">📊</span>
+                <div class="analysis-label">ROLE SKILL MATCH</div>
+                <div class="analysis-number">{{ analysis.score }}%</div>
+                <div class="progress analysis-progress">
+                    <div class="progress-bar"
+                         style="width: {{ analysis.score }}%">
+                    </div>
+                </div>
+                <small>{{ analysis.matched|length }} of {{ analysis.required|length }} required skills matched</small>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="analysis-stat-card">
+                <span class="analysis-icon">✅</span>
+                <div class="analysis-label">MATCHED SKILLS</div>
+                <div class="analysis-number text-success">
+                    {{ analysis.matched|length }}
+                </div>
+                <small>Skills found in your uploaded resume</small>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="analysis-stat-card">
+                <span class="analysis-icon">📚</span>
+                <div class="analysis-label">SKILLS TO DEVELOP</div>
+                <div class="analysis-number text-warning">
+                    {{ analysis.missing|length }}
+                </div>
+                <small>Skills to focus on for {{ analysis.role }}</small>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MATCHED AND MISSING SKILLS -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-lg-6">
+            <div class="career-panel h-100">
+                <div class="career-section-heading">
+                    <div>
+                        <h4>Skills You Already Have</h4>
+                        <p>Skills detected in your resume</p>
+                    </div>
+                    <span class="career-heading-icon">✓</span>
+                </div>
+
+                <div class="career-skill-list">
+                    {% for skill in analysis.matched %}
+                    <span class="career-skill matched-skill">✓ {{ skill }}</span>
+                    {% else %}
+                    <p class="career-empty">
+                        No required skills matched yet. Start with your learning roadmap.
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="career-panel h-100">
+                <div class="career-section-heading">
+                    <div>
+                        <h4>Skills to Develop</h4>
+                        <p>Skills missing from your current resume</p>
+                    </div>
+                    <span class="career-heading-icon">＋</span>
+                </div>
+
+                <div class="career-skill-list">
+                    {% for skill in analysis.missing %}
+                    <span class="career-skill missing-skill">＋ {{ skill }}</span>
+                    {% else %}
+                    <p class="text-success">
+                        Great! All skills in this role profile are matched.
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PERSONALIZED ROADMAP -->
+    <div class="career-panel roadmap-panel">
+
+        <div class="career-section-heading">
+            <div>
+                <span class="career-eyebrow">YOUR PERSONALIZED PLAN</span>
+                <h4 class="mt-1">Your Learning Roadmap</h4>
+                <p>Complete learning tasks and build practical projects to develop your skills.</p>
+            </div>
+
+            <span class="roadmap-task-count">
+                {{ roadmap_tasks|length }} Tasks
+            </span>
+        </div>
+
+        <!-- ROADMAP PROGRESS -->
+        <div class="roadmap-progress-section">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <strong>Overall Progress</strong>
+                <strong class="roadmap-percentage">{{ roadmap_progress }}%</strong>
+            </div>
+
+            <div class="progress roadmap-progress">
+                <div class="progress-bar bg-success"
+                     role="progressbar"
+                     style="width: {{ roadmap_progress }}%"
+                     aria-valuenow="{{ roadmap_progress }}"
+                     aria-valuemin="0"
+                     aria-valuemax="100">
+                </div>
+            </div>
+
+            <small class="text-muted">
+                {{ roadmap_tasks|selectattr('completed')|list|length }}
+                of {{ roadmap_tasks|length }} tasks completed
+            </small>
+        </div>
+
+        <div class="roadmap-divider"></div>
+
+        <!-- ROADMAP TASKS -->
+        {% for task in roadmap_tasks %}
+
+        <div class="roadmap-task-card {% if task.completed %}task-completed{% endif %}">
+
+            <div class="roadmap-task-top">
+                <div class="roadmap-labels">
+                    <span class="roadmap-week">Week {{ task.week }}</span>
+
+                    {% if task.priority == "High" %}
+                    <span class="priority-high">High Priority</span>
+                    {% elif task.priority == "Medium" %}
+                    <span class="priority-medium">Medium Priority</span>
+                    {% else %}
+                    <span class="priority-low">{{ task.priority }} Priority</span>
+                    {% endif %}
+                </div>
+
+                {% if task.completed %}
+                <span class="task-status status-done">✓ Completed</span>
+                {% else %}
+                <span class="task-status status-pending">Pending</span>
+                {% endif %}
+            </div>
+
+            <h5 class="roadmap-skill-title">{{ task.skill }}</h5>
+
+            <p class="roadmap-action">{{ task.action }}</p>
+
+            <div class="suggested-project">
+                <strong>💡 Suggested Project</strong>
+                <p>{{ task.project }}</p>
+            </div>
+
+            <form method="POST"
+                  action="{{ url_for('toggle_roadmap_task', task_id=task.id) }}"
+                  class="mt-3">
+
+                {% if task.completed %}
+                <button type="submit" class="btn btn-outline-secondary btn-sm">
+                    Mark as Incomplete
+                </button>
+                {% else %}
+                <button type="submit" class="btn btn-success btn-sm">
+                    ✓ Mark as Completed
+                </button>
+                {% endif %}
+
+            </form>
+
+        </div>
+
+        {% else %}
+        <p class="career-empty">
+            No roadmap tasks found. Analyze your skill gap to generate your personalized roadmap.
+        </p>
+        {% endfor %}
+
+    </div>
+
+    <div class="career-disclaimer mt-4">
+        <strong>Note:</strong>
+        This is a rule-based skill coverage estimate using the role requirements configured in this project. It does not predict hiring success or measure actual skill proficiency.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
