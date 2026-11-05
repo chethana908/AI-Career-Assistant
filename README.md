@@ -35,3 +35,20 @@ This implementation follows the uploaded project PPT:
 - The interview evaluator is rule-based in this version. A real LLM/API can be integrated later.
 - The resume analyzer works best with text-based PDFs; scanned image PDFs need OCR.
 - Change SECRET_KEY in app.py before deployment.
+
+## Application Screenshots
+
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Resume Analyzer
+![Resume Analyzer](screenshots/resume-analyzer.png)
+
+### Career Gap Analyzer
+![Career Gap Analyzer](screenshots/career-gap.png)
+
+### Job Recommendations
+![Job Recommendations](screenshots/job-recommendations.png)
+
+### Interview Practice
+![Interview Practice](screenshots/interview-practice.png)
